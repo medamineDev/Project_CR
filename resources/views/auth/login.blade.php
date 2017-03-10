@@ -1,5 +1,27 @@
 @extends('layouts.app')
 
+
+@section("css")
+
+    <style>
+
+        .container{
+
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 900px;
+            transform: translate(-50%,-50%);
+
+        }
+
+        .panel-heading{
+
+            background-color: rgba(60, 141, 188, 0.63) !important;
+        }
+    </style>
+
+    @endsection()
 @section('content')
 <div class="container">
     <div class="row">
@@ -64,3 +86,15 @@
     </div>
 </div>
 @endsection
+
+@section("javascript")
+
+    <script type="text/javascript">
+
+       $(".container").fadeOut(200);
+       $(".container").fadeIn(700);
+
+    </script>
+
+
+    @endsection()

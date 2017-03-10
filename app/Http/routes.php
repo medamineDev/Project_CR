@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/dash', function () {
     return view('dashBoard');
 });
 
 
+Route::get('/',['middleware' => ['auth'] , 'uses'=>"HomeController@index"]);
+
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
 
