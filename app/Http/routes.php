@@ -12,13 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dash', function () {
     return view('dashBoard');
 });
 
-//Route::auth();
+
+Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
