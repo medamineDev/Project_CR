@@ -43,8 +43,8 @@
 
 
 
-
-
+   <!-- Todo remove if errors in js
+   <script src="{{ URL::asset('template/bootstrap/js/bootstrap.min.js') }} "></script>
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
@@ -55,7 +55,7 @@
             <!-- jQuery 2.2.3 -->
 <script src="{{ URL::asset('template/plugins/jQuery/jquery-2.2.3.min.js') }}  "></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="{{ URL::asset('template/bootstrap/js/bootstrap.min.js') }} "></script>
+
 <!-- FastClick -->
 <script src="{{ URL::asset('template/plugins/fastclick/fastclick.js') }} "></script>
 <!-- AdminLTE App -->
