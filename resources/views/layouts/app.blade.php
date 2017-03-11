@@ -28,6 +28,18 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+
+        .notif_error , .notif_success {
+            position: fixed;
+            right: -430px;
+            top: 64px;
+            width: 420px;
+
+
+        }
+    </style>
+
     @yield("css")
 </head>
 <body id="app-layout" class="hold-transition skin-blue sidebar-mini">
@@ -39,9 +51,18 @@
 
 
 
+    <div  id="notif_success" class="alert alert-success alert-dismissible notif_success">
+        <button type="button" id="closeSuccessNotif" class="close" >×</button>
+        <h4><i class="icon fa fa-check"></i> Alert!</h4>
+        <p id="body_notif_success">Follow the steps to continue to payment.</p>
+    </div>
 
 
-
+    <div id="notif_error" class="alert alert-danger alert-dismissible notif_error">
+        <button type="button" id="closeErroNotif"  class="close">×</button>
+        <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+            <p class=body_notif_error">Follow the steps to continue to payment.</p>
+    </div>
 
    <!-- Todo remove if errors in js
    <script src="{{ URL::asset('template/bootstrap/js/bootstrap.min.js') }} "></script>
@@ -75,8 +96,55 @@
 <!-- page script -->
 
 
-@yield("javascript")
 
+
+<script type="text/javascript">
+
+
+
+        function showSuccessMessage(msg) {
+
+            $('#body_notif_success').html(msg);
+            var domObject = $('#notif_success');
+            closeNotif(domObject);
+            openNotif(domObject);
+        }
+
+
+        function showErrorMessage(msg) {
+
+            $('#body_notif_error').html(msg);
+            var domObject =$('#notif_error');
+            closeNotif(domObject);
+            openNotif(domObject);
+        }
+
+        function closeNotif(notif) {
+
+            notif.animate({
+                right: '-450px'
+            });
+        }
+
+        function openNotif(notif) {
+
+            notif.animate({
+                right: '3px'
+            });
+
+            setTimeout(function () {
+
+                closeNotif(notif);
+            },5000);
+        }
+
+
+</script>
+
+
+
+
+    @yield("javascript")
 
 </body>
 </html>

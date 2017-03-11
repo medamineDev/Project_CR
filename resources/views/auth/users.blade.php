@@ -4,7 +4,26 @@
 
     <style>
 
+        .modal-footer {
+            border-top-color: #3c8dbc;
+            border-width: 2px;
+        }
 
+        .detail_row span{
+
+            font-weight: 600;
+            color: cornflowerblue;
+        }
+        .detail_row input{
+            height: 27px;
+            border: 1px solid silver;
+        }
+
+        .detail_row select{
+            width: 170px;
+            height: 27px;
+            font-size: smaller;
+        }
         .container {
             text-align: center;
 
@@ -134,7 +153,7 @@
 
                     <div class="row">
 
-                            <div class="col-md-4">
+                       <div class="col-md-3">
 
                                 <div class="imgProfile">
                                 </div>
@@ -146,42 +165,72 @@
                             <div class="profil_content">
 
                                 <div class="detail_row">
-                                    <span>nom :</span><label> Aouidane</label>
+                                    <span>Nom</span><label>
+                                        <input class="form-control" value="amine" id="us_nom" type="text" placeholder="nom">
+
+                                    </label>
                                 </div>
 
                                 <div class="detail_row">
-                                    <span>nom :</span><label> Aouidane</label>
+                                    <span>Prenom</span><label>
+                                        <input class="form-control" id="us_prenom" type="text" value="Aouidane" placeholder="nom">
+
+                                    </label>
+                                </div>
+
                                 </div>
 
 
 
                             </div>
 
-                        </div>
 
-
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-md-offset-1">
                             <div class="profil_content">
 
                                 <div class="detail_row">
-                                    <span>nom :</span><label> Aouidane</label>
+                                    <span>Roles</span>
+                                    <label>
+
+                                        <select id="role_select" class="form-control">
+                                            <option>Admin</option>
+                                            <option>User</option>
+                                            <option>Agent Commercial</option>
+                                            <option>Sécretaire </option>
+                                            <option>Comptable</option>
+                                        </select>
+                                    </label>
                                 </div>
 
                                 <div class="detail_row">
-                                    <span>nom :</span><label> Aouidane</label>
+                                    <span>Centres</span><label>
+
+                                        <select id="centres_select" class="form-control">
+                                            <option>Centre 1</option>
+                                            <option>Centre 2</option>
+                                            <option>Centre 3</option>
+                                            <option>Centre 4</option>
+                                            <option>Centre 5</option>
+
+                                        </select>
+
+                                    </label>
                                 </div>
-
-
 
                             </div>
 
                         </div>
 
 
-                    </div>
+
+                        </div><!-- end row -->
 
 
-                </div>
+                    </div><!-- end modal-content -->
+
+
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
@@ -206,7 +255,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Anuller</button>
-                    <button type="button" class="btn btn-primary">Confimer</button>
+                    <button type="button" id="confirmDeleteButton" class="btn btn-primary">Confimer</button>
                 </div>
             </div>
         </div>
@@ -229,6 +278,15 @@
 
             var selectedUser = 0;
             $(".removeModalBody").hide();
+
+
+
+            function removeUserFn(userId) {
+
+                return true;
+            }
+
+
             $('.editButton').click(function () {
 
                 var dataUserId = this.getAttribute('data-user-id');
@@ -244,6 +302,27 @@
 
 
             });
+            $('#confirmDeleteButton').click(function () {
+
+
+                var dataUserId = this.getAttribute('data-user-id');
+                selectedUser = dataUserId;
+
+                var isRemoved = removeUserFn(selectedUser);
+                if(isRemoved){
+
+                    $('#myModalRemove').modal("hide");
+                    showSuccessMessage(false);
+                }else{
+
+                    showErrorMessage(false);
+                }
+
+
+
+            });
+
+
 
 
             $('#myModalEdit').on('shown.bs.modal', function () {
