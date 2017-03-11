@@ -140,7 +140,7 @@
             var areaChart = new Chart(areaChartCanvas);
 
             var areaChartData = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["Januarydd", "February", "March", "April", "May", "June", "July"],
                 datasets: [
                     {
                         label: "Electronics",

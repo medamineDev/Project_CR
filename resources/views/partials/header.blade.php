@@ -64,7 +64,7 @@
             </li>
 
             <li>
-                <a href="pages/login.html">
+                <a href="/logout">
                     <i class="fa  fa-lock"></i> <span>Deconnexion</span>
                 </a>
             </li>
