@@ -55,14 +55,14 @@
     <div  id="notif_success" class="alert alert-success alert-dismissible notif_success">
         <button type="button" id="closeSuccessNotif" class="close" >×</button>
         <h4><i class="icon fa fa-check"></i> Alert!</h4>
-        <p id="body_notif_success">Follow the steps to continue to payment.</p>
+        <p id="body_notif_success">Opération Réussite ! </p>
     </div>
 
 
     <div id="notif_error" class="alert alert-danger alert-dismissible notif_error">
         <button type="button" id="closeErroNotif"  class="close">×</button>
         <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-            <p class=body_notif_error">Follow the steps to continue to payment.</p>
+            <p class=body_notif_error">Opération Echouée !</p>
     </div>
 
    <!-- Todo remove if errors in js
