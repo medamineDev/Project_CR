@@ -19,6 +19,8 @@ Route::get('/dash', function () {
 Route::get('/',['middleware' => ['auth'] , 'uses'=>"HomeController@index"]);
 Route::get('/userList',['middleware' => ['auth'] , 'uses'=>"Auth\UserController@getUserList"]);
 Route::get('/removeUser/{userId}',['middleware' => ['auth'] , 'uses'=>"Auth\UserController@removeUser"]);
+Route::get('/getUserById/{userId}',['middleware' => ['auth'] , 'uses'=>"Auth\UserController@getUserById"]);
+Route::put('/editUser',['middleware' => ['auth'] , 'uses'=>"Auth\UserController@editUser"]);
 
 Route::auth();
 

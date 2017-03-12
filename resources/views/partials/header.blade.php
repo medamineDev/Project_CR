@@ -57,6 +57,20 @@
                     <li><a href="pages/mensuelles.html"><i class="fa fa-circle-o"></i> Saisie donnees mensuelles</a></li>
                 </ul>
             </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa  fa-edit"></i>
+                    <span>Administration</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/userList"><i class="fa fa-circle-o"></i>Gestion des utilisateurs</a></li>
+                    <li><a href="/roles"><i class="fa fa-circle-o"></i>Gestion des Roles</a></li>
+                </ul>
+            </li>
             <li>
                 <a href="pages/settings.html">
                     <i class="fa fa-gear"></i> <span>Parametres</span>
