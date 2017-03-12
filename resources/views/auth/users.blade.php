@@ -9,21 +9,23 @@
             border-width: 2px;
         }
 
-        .detail_row span{
+        .detail_row span {
 
             font-weight: 600;
             color: cornflowerblue;
         }
-        .detail_row input{
+
+        .detail_row input {
             height: 27px;
             border: 1px solid silver;
         }
 
-        .detail_row select{
+        .detail_row select {
             width: 170px;
             height: 27px;
             font-size: smaller;
         }
+
         .container {
             text-align: center;
 
@@ -58,13 +60,12 @@
             text-align: center;
         }
 
-        .imgProfile{
+        .imgProfile {
 
             background: url("http://assets.ngin.com/site_files/2731/i/blank-profile.png");
             background-size: 113px 100px;
             background-repeat: no-repeat;
             height: 104px;
-
 
         }
 
@@ -99,7 +100,7 @@
                     @foreach ($users as $user)
 
 
-                        <tr>
+                        <tr id="row-{{ $user->id }}">
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->first_name }}</td>
                             <td>{{ $user->last_name }}</td>
@@ -153,36 +154,37 @@
 
                     <div class="row">
 
-                       <div class="col-md-3">
+                        <div class="col-md-3">
 
-                                <div class="imgProfile">
-                                </div>
-
-
+                            <div class="imgProfile">
                             </div>
+
+
+                        </div>
 
                         <div class="col-md-4">
                             <div class="profil_content">
 
                                 <div class="detail_row">
                                     <span>Nom</span><label>
-                                        <input class="form-control" value="amine" id="us_nom" type="text" placeholder="nom">
+                                        <input class="form-control" value="amine" id="us_nom" type="text"
+                                               placeholder="nom">
 
                                     </label>
                                 </div>
 
                                 <div class="detail_row">
                                     <span>Prenom</span><label>
-                                        <input class="form-control" id="us_prenom" type="text" value="Aouidane" placeholder="nom">
+                                        <input class="form-control" id="us_prenom" type="text" value="Aouidane"
+                                               placeholder="nom">
 
                                     </label>
                                 </div>
 
-                                </div>
-
-
-
                             </div>
+
+
+                        </div>
 
 
                         <div class="col-md-4 col-md-offset-1">
@@ -196,7 +198,7 @@
                                             <option>Admin</option>
                                             <option>User</option>
                                             <option>Agent Commercial</option>
-                                            <option>Sécretaire </option>
+                                            <option>Sécretaire</option>
                                             <option>Comptable</option>
                                         </select>
                                     </label>
@@ -222,13 +224,10 @@
                         </div>
 
 
-
-                        </div><!-- end row -->
-
-
-                    </div><!-- end modal-content -->
+                    </div><!-- end row -->
 
 
+                </div><!-- end modal-content -->
 
 
                 <div class="modal-footer">
@@ -280,10 +279,28 @@
             $(".removeModalBody").hide();
 
 
+            function removeUserFn(userId, _callback) {
 
-            function removeUserFn(userId) {
 
-                return true;
+                var wsUrl = 'removeUser/' + userId;
+                $.ajax({
+                    url: wsUrl,
+                    type: 'get',
+                    error: function () {
+
+                        _callback(false)
+                    },
+                    success: function (data) {
+
+                        var status = data["status"];
+                        _callback(status);
+
+
+                    }
+
+                });
+
+
             }
 
 
@@ -305,29 +322,35 @@
             $('#confirmDeleteButton').click(function () {
 
 
-                var dataUserId = this.getAttribute('data-user-id');
-                selectedUser = dataUserId;
+                removeUserFn(selectedUser, function (isRemoved) {
 
-                var isRemoved = removeUserFn(selectedUser);
-                if(isRemoved){
+                    if (isRemoved) {
 
-                    $('#myModalRemove').modal("hide");
-                    showSuccessMessage(false);
-                }else{
+                        $('#myModalRemove').modal("hide");
+                        $('#row-'+selectedUser).css("background-color","red");
+                        $('#row-'+selectedUser).fadeIn(500);
+                        $('#row-'+selectedUser).fadeOut(500);
+                        $('#row-'+selectedUser).fadeIn(500);
+                        $('#row-'+selectedUser).fadeOut(500);
+                        setTimeout(function () {
 
-                    showErrorMessage(false);
-                }
+                            $('#row-'+selectedUser).hide(1000);
 
+                        },2500);
+
+                        showSuccessMessage(false);
+                    } else {
+
+                        showErrorMessage(false);
+                    }
+
+                });
 
 
             });
 
 
-
-
             $('#myModalEdit').on('shown.bs.modal', function () {
-
-
 
 
             })

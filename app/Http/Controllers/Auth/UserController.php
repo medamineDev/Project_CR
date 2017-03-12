@@ -45,4 +45,10 @@ class UserController extends Controller
         return view("auth.users" ,compact('users'));
 
     }
+
+    public function removeUser($userId){
+
+        return response()->json(["status"=>true,"response"=>$userId]);
+
+    }
 }
