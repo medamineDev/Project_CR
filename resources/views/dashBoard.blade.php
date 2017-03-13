@@ -148,7 +148,7 @@
                 }
 
                 var data = {
-                    label: "Electronics",
+                    label: "January",
                     fillColor: "rgba(210, 214, 222, 1)",
                     strokeColor: "rgba(60,141,188,0.8)",
                     pointColor: "#3b8bba",
@@ -175,6 +175,18 @@
             //- AREA CHART -
             //--------------
 
+            var data=  {
+                label: "January",
+                /*    fillColor: "rgba(210, 214, 222, 1)",
+                 strokeColor: "rgba(210, 214, 222, 1)",
+                 pointColor: "rgba(210, 214, 222, 1)",
+                 pointStrokeColor: "#c1c7d1",
+                 pointHighlightFill: "#fff",*/
+                fillColor: ["rgba(220,220,220,0.5)", "navy", "red", "orange"],
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81]
+                // data: [65]
+            };
             // Get context with jQuery - using jQuery's .get() method.
             var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
             // This will get the first returned node in the jQuery collection.
@@ -182,31 +194,11 @@
 
             var areaChartData = {
                // labels: ["January", "February", "March", "April", "May", "June", "July","March", "April", "May", "June", "July"],
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: arrayData, /*[
-                 {
-                        label: "Electronics",
-                        fillColor: "rgba(210, 214, 222, 1)",
-                        strokeColor: "rgba(210, 214, 222, 1)",
-                        pointColor: "rgba(210, 214, 222, 1)",
-                        pointStrokeColor: "#c1c7d1",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                       // data: [65, 59, 80, 81, 56, 55, 40]
-                        data: [65]
-                    },
-                    {
-                        label: "Digital Goods",
-                        fillColor: "rgba(60,141,188,0.9)",
-                        strokeColor: "rgba(60,141,188,0.8)",
-                        pointColor: "#3b8bba",
-                        pointStrokeColor: "rgba(60,141,188,1)",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(60,141,188,1)",
-                        data: [28]
-                       // data: [28, 48, 40, 19, 86, 27, 90]
-                    }
-                ]*/
+                labels: ["January", "February", "March", "April"],
+                datasets: [
+                        data
+
+                ]
             };
 
 
@@ -222,9 +214,9 @@
             var barChartCanvas = $("#barChart").get(0).getContext("2d");
             var barChart = new Chart(barChartCanvas);
             var barChartData = areaChartData;
-            barChartData.datasets[1].fillColor = "#00a65a";
+          /*  barChartData.datasets[1].fillColor = "#00a65a";
             barChartData.datasets[1].strokeColor = "#00a65a";
-            barChartData.datasets[1].pointColor = "#00a65a";
+            barChartData.datasets[1].pointColor = "#00a65a";*/
             var barChartOptions = {
                 //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
                 scaleBeginAtZero: true,
@@ -255,7 +247,7 @@
 
 
 
- /*           for( var i=0;i< 2;i++){
+      /*     for( var i=0;i< 2;i++){
                 var bars = areaChartData.datasets[i];
 
                 //You can check for bars[i].value and put your conditions here
@@ -274,6 +266,10 @@
 
             barChartOptions.datasetFill = false;
             barChart.Bar(barChartData, barChartOptions);
+
+
+
+
         });
     </script>
 
