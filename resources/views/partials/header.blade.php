@@ -53,8 +53,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/annuelles.html"><i class="fa fa-circle-o"></i>Saisie donnees annuelles</a></li>
-                    <li><a href="pages/mensuelles.html"><i class="fa fa-circle-o"></i> Saisie donnees mensuelles</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Saisie donnees annuelles</a></li>
+                    <li><a href="/dashMonth"><i class="fa fa-circle-o"></i> Saisie donnees mensuelles</a></li>
                 </ul>
             </li>
 
