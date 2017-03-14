@@ -92,6 +92,8 @@
 <!-- ChartJS 1.0.1 -->
 <script src="{{ URL::asset('template/plugins/chartjs/Chart.min.js') }} "></script>
 
+<script src="{{ URL::asset('template/plugins/datepicker/bootstrap-datepicker.js') }} "></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src=" {{ URL::asset('template/dist/js/demo.js') }} "></script>
 <!-- page script -->

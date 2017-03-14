@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+
 class DashboardController extends Controller
 {
 
@@ -15,72 +16,84 @@ class DashboardController extends Controller
     {
 
         /* todo get dynamic Year*/
-        $year="2016";
+        $year = "2016";
 
         $occupationData = DB::table("occupation")
-            ->join("mois","mois.id","=","occupation.idMois")
-            ->where("mois.annee",$year)->get();
+            ->join("mois", "mois.id", "=", "occupation.idMois")
+            ->where("mois.annee", $year)->get();
 
         $presenceData = DB::table("presence")
-            ->join("mois","mois.id","=","presence.idMois")
-            ->where("mois.annee",$year)->get();
+            ->join("mois", "mois.id", "=", "presence.idMois")
+            ->where("mois.annee", $year)->get();
 
         $productData = DB::table("Produit")
-            ->join("mois","mois.id","=","Produit.idMois")
-            ->where("mois.annee",$year)->get();
+            ->join("mois", "mois.id", "=", "Produit.idMois")
+            ->where("mois.annee", $year)->get();
 
         $params = $this->getStats();
-        dd($params);
 
 
-        return view("Dash.monthlyInputDash",compact("occupationData","presenceData","productData"));
+        return view("Dash.monthlyInputDash", compact("occupationData", "presenceData", "productData"));
 
     }
 
 
+    public function getParamVal($type)
+    {
 
-    public function getParamVal($type){
-
-        $year=2016;
+        $year = 2016;
         $paramAn = DB::table("paramannuels")
-            ->join("parametres","parametres.id","=","paramannuels.idParametre")
-            ->where("paramannuels.annee",$year)
-            ->where("parametres.id",$type)
+            ->join("parametres", "parametres.id", "=", "paramannuels.idParametre")
+            ->where("paramannuels.annee", $year)
+            ->where("parametres.id", $type)
             ->first();
 
 
-        return $paramAn?$paramAn->valeur :0 ;
+        return $paramAn ? $paramAn->valeur : 0;
 
     }
 
-    public function getStats(){
+    public function getStats()
+    {
 
 
-        $year="2016";
+        $year = "2016";
         $presenceData = DB::table("presence")
-            ->join("mois","mois.id","=","presence.idMois")
-            ->where("mois.annee",$year)->get();
+            ->join("mois", "mois.id", "=", "presence.idMois")
+            ->where("mois.annee", $year)->get();
 
 
-        foreach ($presenceData as $presence){
+        $occupationData = DB::table("occupation")
+            ->join("mois", "mois.id", "=", "occupation.idMois")
+            ->where("mois.annee", $year)->get();
 
-        $presence->seuil = $this->getParamVal(7);
-        $presence->tolerance = $this->getParamVal(8);
+
+        foreach ($presenceData as $presence) {
+
+            $presence->seuil = $this->getParamVal(7);
+            $presence->tolerance = $this->getParamVal(8);
+
+        }
+
+        foreach ($occupationData as $occupation) {
+
+            $occupation->seuil = $this->getParamVal(3);
+            $occupation->tolerance = $this->getParamVal(4);
 
         }
 
 
-
-        return $presenceData;
+        return ["occupationData"=>$occupationData,"presenceData"=>$presenceData];
 
     }
 
     public function statsPage()
     {
         $stats = $this->getStats();
-
-        //dd($stats);
-        return view('dashBoard',compact("stats"));
+        $occupationData = $stats["occupationData"];
+        $presenceData = $stats["presenceData"];
+       // dd($occupationData);
+        return view('dashBoard', compact("occupationData","presenceData"));
     }
 
 
