@@ -19,7 +19,7 @@ Route::get('/getUserById/{userId}',['middleware' => ['auth'] , 'uses'=>"Auth\Use
 Route::put('/editUser',['middleware' => ['auth'] , 'uses'=>"Auth\UserController@editUser"]);
 Route::get('/dashMonth',['middleware' => ['auth'] , 'uses'=>"Dash\DashboardController@monthlyDashIndex"]);
 Route::get('/getStats',['middleware' => ['auth'] , 'uses'=>"Dash\DashboardController@getStats"]);
-Route::get('/',['middleware' => ['auth'] , 'uses'=>"Dash\DashboardController@statsPage"]);
+Route::get('/{year?}/{month?}',['middleware' => ['auth'] , 'uses'=>"Dash\DashboardController@statsPage"]);
 
 Route::auth();
 

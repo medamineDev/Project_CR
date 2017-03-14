@@ -4,12 +4,19 @@
 
     <style>
 
-        td{
+        td {
 
             cursor: pointer;
         }
+
+        .datePiker .form-group {
+            margin-left: 16px;
+            width: 200px;
+        }
+
+
     </style>
-    @endsection
+@endsection
 
 @section("content")
 
@@ -35,19 +42,52 @@
 
         <!-- Main content -->
         <section class="content">
-            <div class="row">
+            <div class="row datePiker">
 
-                <div class="form-group">
-                    <label>Date:</label>
 
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        <input type="text" class="form-control pull-right" id="datepicker">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Mois:</label>
+
+                        <select id="mois_select" class="form-control">
+
+                            <option id="0">Select</option>
+                            <option id="1">AVRIL</option>
+                            <option id="2">MAI</option>
+                            <option id="3">JUIN</option>
+                            <option id="4">JUILLET</option>
+                            <option id="5">AOUT</option>
+                            <option id="6">SEPTEMBRE</option>
+                            <option id="7">OCTOBRE</option>
+                            <option id="8">NOVEMBRE</option>
+                            <option id="9">DECEMBRE</option>
+                            <option id="10">JANVIER</option>
+                            <option id="11">FEVRIER</option>
+                            <option id="12">MARS</option>
+
+
+                        </select>
                     </div>
-                    <!-- /.input group -->
                 </div>
+
+                <div class="col-md-3">
+
+                    <div class="form-group">
+                        <label>Année:</label>
+
+                        <select id="year_select" class="form-control">
+
+                            @for ($i = 2000; $i < 2030; $i++)
+                                <option id="{{ $i }}">{{ $i  }}</option>
+                            @endfor
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                </div>
+
 
             </div>
 
@@ -82,61 +122,17 @@
                     <!-- /.box -->
 
                     <!-- DONUT CHART -->
-                    <div class="box box-danger">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Etats Financiers </h3>
 
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                            class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="chart">
-                            <div class="box-body">
-                                <div class="chart">
-                                    <canvas id="barChart_4" style="height:250px"></canvas>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                    </div>
                     <!-- /.box -->
 
                 </div>
-                <!-- /.col (LEFT) -->
+
                 <div class="col-md-6">
-                    <!-- LINE CHART -->
-                    <div class="box box-info">
+
+                    <div class="box box-primary">
                         <div class="box-header with-border">
 
-                            <h3 class="box-title">Taux Occupation </h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                            class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="chart">
-                            <div class="box-body">
-                                <div class="chart">
-                                    <canvas id="barChartOccupation" style="height:250px"></canvas>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                    </div>
-                    <!-- /.box -->
-
-                    <!-- BAR CHART -->
-                    <div class="box box-success">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Taux</h3>
+                            <h3 class="box-title">Taux Occupation</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -148,14 +144,20 @@
                         </div>
                         <div class="box-body">
                             <div class="chart">
-                                <canvas id="barChart_4" style="height:250px"></canvas>
+                                <div class="box-body">
+                                    <div class="chart">
+                                        <canvas id="barChartOccupation" style="height:250px"></canvas>
+                                    </div>
+                                </div>
+                                <!-- /.box-body -->
                             </div>
                         </div>
                         <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
 
                 </div>
+                <!-- /.col (LEFT) -->
+
                 <!-- /.col (RIGHT) -->
             </div>
 
@@ -175,20 +177,82 @@
         $(function () {
 
 
+            var currentMoth = "{{ $month }}";
 
-            //Date picker
-            $('#datepicker').datepicker({
-                autoclose: true
-            });
+            var currentYear = "{{ $year }}";
+
 
             var array = JSON.parse('<?php echo json_encode($presenceData); ?>');
             var arrayOcc = JSON.parse('<?php echo json_encode($occupationData); ?>');
+            var getByMoth = "{{ $getByMonth }}";
             var presenceArrayData = [];
             var presenceColorArray = [];
 
             var occupationArrayData = [];
             var occupationColorArray = [];
-            console.log(array);
+            var arrayPresenceAssetsMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var arrayOccupationAssetsMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var labelMonth = ["AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECEMBRE", "JABNVIER", "FEVRIER", "MARS"];
+
+            if (currentMoth) {
+
+                var mothLabel = labelMonth[currentMoth-1];
+               // alert("is cuurent month --> " + currentMoth +" -> "+mothLabel);
+                $('#mois_select').val(mothLabel);
+
+            } else {
+
+                $('#mois_select').val("Select");
+            }
+           // alert("current month -> " + currentMoth);
+           // alert("current year -> " + currentYear);
+
+            $('#year_select').val(currentYear);
+
+            $('#mois_select').change(function () {
+
+                var selectedMothId = $(this).find('option:selected').attr('id');
+                currentMoth = selectedMothId;
+
+
+                var path = "";
+                if (selectedMothId == 0) {
+
+                    path = "/" + currentYear;
+
+                } else {
+
+                    path = "/" + currentYear + "/" + currentMoth;
+
+
+                }
+
+
+                window.location.href = path;
+            });
+
+
+            $('#year_select').change(function () {
+
+                var selectedYearId = $(this).find('option:selected').attr('id');
+                currentYear = selectedYearId;
+
+
+                var path = "";
+                if (currentMoth == 0) {
+
+                    path = "/" + currentYear;
+
+                } else {
+
+                    path = "/" + currentYear + "/" + currentMoth;
+
+
+                }
+
+
+                window.location.href = path;
+            });
 
 
             function getArrays(array) {
@@ -248,13 +312,34 @@
             occupationColorArray = occupationChartArrays[0];
             occupationArrayData = occupationChartArrays[1];
 
+
+            if (getByMoth) {
+
+                if (array.length > 0) {
+                    var monthPresenceIndex = array[0].idMois;
+                    arrayPresenceAssetsMonth[monthPresenceIndex - 1] = array[0].nbJours;
+                    presenceArrayData = arrayPresenceAssetsMonth;
+                }
+
+
+                if (arrayOcc.length > 0) {
+
+                    var monthOccupationIndex = arrayOcc[0].idMois;
+                    arrayOccupationAssetsMonth[monthOccupationIndex - 1] = arrayOcc[0].nbJours;
+                    occupationArrayData = arrayOccupationAssetsMonth;
+                }
+
+
+            }
+
             console.log("colors :");
-            console.log(occupationColorArray);
+            console.log(presenceColorArray);
             console.log("previsions");
-            console.log(occupationArrayData);
+            console.log(presenceArrayData);
+
 
             var dataPresence = {
-                label: "presence",
+                label: "Presence",
                 fillColor: presenceColorArray,
                 strokeColor: "rgba(60,141,188,0.8)",
                 pointColor: "#3b8bba",
@@ -265,7 +350,7 @@
             };
 
             var dataOccupation = {
-                label: "presence",
+                label: "Occupation",
                 fillColor: occupationColorArray,
                 strokeColor: "rgba(60,141,188,0.8)",
                 pointColor: "#3b8bba",
@@ -290,7 +375,7 @@
             //  var areaChart = new Chart(areaChartCanvas);
 
             var areaChartData = {
-                labels: ["Jan", "Fev", "Mar", "Avr", "May", "Juin", "Juillet", "Aout", "Sep", "Oct", "Nov", "Dec"],
+                labels: labelMonth,
 
                 datasets: [dataPresence]
 
@@ -298,7 +383,8 @@
             };
 
             var occupationAreaChartData = {
-                labels: ["Jan", "Fev", "Mar", "Avr", "May", "Juin", "Juillet", "Aout", "Sep", "Oct", "Nov", "Dec"],
+                labels: labelMonth,
+
 
                 datasets: [dataOccupation]
 

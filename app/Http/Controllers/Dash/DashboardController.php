@@ -53,19 +53,30 @@ class DashboardController extends Controller
 
     }
 
-    public function getStats()
+    public function getStats($year, $month, $getByMonth)
     {
 
 
-        $year = "2016";
         $presenceData = DB::table("presence")
-            ->join("mois", "mois.id", "=", "presence.idMois")
-            ->where("mois.annee", $year)->get();
+            ->join("mois", "mois.id", "=", "presence.idMois");
+
+        if ($getByMonth) {
+
+            $presenceData = $presenceData->where("mois.id", $month);
+        }
+
+        $presenceData = $presenceData->where("mois.annee", $year)->get();
 
 
         $occupationData = DB::table("occupation")
-            ->join("mois", "mois.id", "=", "occupation.idMois")
-            ->where("mois.annee", $year)->get();
+            ->join("mois", "mois.id", "=", "occupation.idMois");
+
+        if ($getByMonth) {
+
+            $occupationData = $occupationData->where("mois.id", $month);
+        }
+
+        $occupationData = $occupationData->where("mois.annee", $year)->get();
 
 
         foreach ($presenceData as $presence) {
@@ -83,17 +94,30 @@ class DashboardController extends Controller
         }
 
 
-        return ["occupationData"=>$occupationData,"presenceData"=>$presenceData];
+        return ["occupationData" => $occupationData, "presenceData" => $presenceData];
 
     }
 
-    public function statsPage()
+    public function statsPage($year = false, $month = false)
     {
-        $stats = $this->getStats();
+        $getByMonth = false;
+        if($month){
+
+            $getByMonth = true;
+        }
+
+        if (!$year && !$month) {
+
+            $now = new \DateTime('now');
+            $year = $now->format('Y');
+
+        }
+
+        $stats = $this->getStats($year, $month, $getByMonth);
         $occupationData = $stats["occupationData"];
         $presenceData = $stats["presenceData"];
-       // dd($occupationData);
-        return view('dashBoard', compact("occupationData","presenceData"));
+
+        return view('dashBoard', compact("occupationData", "presenceData","getByMonth","year","month"));
     }
 
 
